@@ -13,17 +13,35 @@
  */
 package org.ff4j.sample;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-/**
- * Main class.
- */
-@SpringBootApplication(exclude = ThymeleafAutoConfiguration.class)
+
+@Configuration
+@ControllerAdvice
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public String handleException(Exception e, Model model) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("status", HttpStatus.FORBIDDEN.value());
+        map.put("message", "No message available");
+        model.addAttribute("errors", map);
+        return "error";
     }
 }
 

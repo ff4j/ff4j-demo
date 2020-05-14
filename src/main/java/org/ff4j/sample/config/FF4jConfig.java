@@ -21,10 +21,6 @@ import org.ff4j.store.InMemoryFeatureStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Definition of FF4j Bean. This definition should be done not only
- * in the backend with web console and rest API but also in your microservices.
- */
 @Configuration
 public class FF4jConfig {
     
@@ -34,7 +30,6 @@ public class FF4jConfig {
         ff4j.setFeatureStore(new InMemoryFeatureStore());
         ff4j.setPropertiesStore(new InMemoryPropertyStore());
         ff4j.setEventRepository(new InMemoryEventRepository());
-        ff4j.audit(true);
         return ff4j;
     }
 }
