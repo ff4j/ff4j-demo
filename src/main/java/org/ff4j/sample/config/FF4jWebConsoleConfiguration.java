@@ -10,9 +10,6 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -31,9 +28,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ConditionalOnClass({FF4jDispatcherServlet.class})
 @AutoConfigureAfter(FF4jConfig.class)
-public class FF4jWebConsoleConfiguration extends SpringBootServletInitializer implements WebMvcConfigurer {
-    
-    // --- Web Console (ff4j-web) -- 
+public class FF4jWebConsoleConfiguration extends SpringBootServletInitializer {
     
     /**
      * Definition of the servlet for web console
@@ -54,35 +49,6 @@ public class FF4jWebConsoleConfiguration extends SpringBootServletInitializer im
     public ServletRegistrationBean ff4jDispatcherServletRegistrationBean(FF4jDispatcherServlet ff4jDispatcherServlet) {
         return new ServletRegistrationBean(ff4jDispatcherServlet, "/ff4j-web-console/*");
     }
-    
-    // --- Web Console (VueJS, javascript) -- 
-    
-    /**
-     * By overriding `addCorsMappings` from {@link WebMvcConfigurer}, 
-     * we allow access with the full JavaScript Console.
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
-    }
-    
-    // --- REST API Documentation with Swagger -- 
-    
-    /**
-     * By overriding `addResourceHandlers` from {@link WebMvcConfigurer}, 
-     * we tell SpringMVC not to use Thymeleaf to access Swagger UI
-     * 
-     * {@inheritDoc}
-     */
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-    
-    
     
     
 }

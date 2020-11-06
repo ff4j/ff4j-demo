@@ -9,9 +9,6 @@
     <logger name="org.ff4j.sample" level="INFO" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
-     <logger name="org.ff4j.web" level="INFO" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </logger>
     
     <root level="ERROR">
         <appender-ref ref="STDOUT" />
